@@ -27,13 +27,13 @@ If you want to use Firebase in your application, you can use the branch - [main]
 # Run
 
 Done! \
-Now you can run the application with the command ```npm start``` \
+Now you can run the application with the command ```npm start```
 ***
 
 # Зависимости
 Для запуска приложения Вам потребуется:
 
-* __Аккаунт на сайте openweathermap. (https://openweathermap.org)__ \
+* __Аккаунт на сайте openweathermap. (https://openweathermap.org)__
 
 Если Вы хотите использовать Firebase в приложении, воспользуйтесь веткой - [main](https://github.com/Sanarix/react-weather/tree/main).
 
