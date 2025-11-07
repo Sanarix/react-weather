@@ -23,7 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 #firebase
-src/config
+src/config/firebaseConfig.json
+src/config/weatherApi.json
 .firebase/
 .firebaserc
 firebase.json
