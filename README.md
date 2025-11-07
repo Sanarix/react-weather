@@ -10,7 +10,7 @@ The app only queries weather conditions in Russia. The search is in Russian. Exa
 To run the app, you'll need:
 
 __1) A Firebase account. (https://firebase.google.com)__ \
-__2) An Openweathermap account. (https://openweathermap.org)__ \
+__2) An Openweathermap account. (https://openweathermap.org)__
 
 If you do not want to use Firebase in your application, you can use the branch - [no-firebase](https://github.com/Sanarix/react-weather/tree/no-firebase). However, you will still need a personal account in openweathermap.
 
@@ -41,7 +41,7 @@ You'll get a configuration for your app that looks like this:
 
 * Remove __.template__ from the file names in the folder __src/config/__
 
-# Deploying to Firebase \
+# Deploying to Firebase
 You can now use your application. If you don't need to deploy it to a hosting server, skip to the last step - [Run](#Run).
 
 * To deploy your application and perform the following steps, you need to run the command ```npm run build```
@@ -62,7 +62,7 @@ Now you can run the application with the command ```npm start``` \
 Для запуска приложения Вам потребуется:
 
 __1) Аккаунт Firebase. (https://firebase.google.com)__ \
-__2)Аккаунт на сайте openweathermap. (https://openweathermap.org)__ \
+__2)Аккаунт на сайте openweathermap. (https://openweathermap.org)__
 
 Если Вам не нужен Firebase в приложении, воспользуйтесь веткой - [no-firebase](https://github.com/Sanarix/react-weather/tree/no-firebase). Однако Вам всё ещё нужен личный кабинет в openweathermap.
 
