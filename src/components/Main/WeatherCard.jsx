@@ -1,12 +1,12 @@
 import getWindDir from '../../functions/getWindDir';
 
-const WeatherCard = ({weatherInfo, styles, cityName}) => {
+const WeatherCard = ({weatherInfo, styles}) => {
 	const CelciumCoefficient = 273.15;
 	const PressureCoefficient = 0.75;
 
 	return (
 		<div className={styles.weatherCard}>
-			<h1 className={styles.weatherCard_header}>{cityName}</h1>
+			<h1 className={styles.weatherCard_header}>{weatherInfo.name}</h1>
 			<h2 className={styles.weatherCard_subheader}> Сейчас {weatherInfo.weather[0].description}
 			</h2>
 			<img className={styles.weatherCard_image} src={` https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`} alt="weather-icon" />

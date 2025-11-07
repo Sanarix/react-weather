@@ -4,10 +4,10 @@ import weatherConfig from '../../config/weatherApi.json';
 import cities from '../../cities/cities.json';
 import WeatherCard from './WeatherCard';
 import Overlay from '../Overlay/Overlay';
+import { weatherRequest } from '../../mocks/mock';
 
 const Main = () => {
-	const [cityName, setCityName] = useState('');
-	const [weatherInfo, setWeatherInfo] = useState(null);
+	const [weatherInfo, setWeatherInfo] = useState(weatherRequest);
 	const [searchQuery, setSearchQuery] = useState('');
 	const [seacrhSortedList, setSearchSortedList] = useState(null);
 	const [overlayShow, setOverlayShow] = useState(false);
@@ -16,7 +16,6 @@ const Main = () => {
 		const city = seacrhSortedList.filter((el) => 
 			el.name === e.target.textContent
 		)[0];
-		setCityName(city.name)
 		fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${city.coords.lat}&lon=${city.coords.lon}&appid=${weatherConfig['API-Key']}&lang=ru`)
 			.then(res => res.json())
 			.then(res => {
@@ -82,7 +81,6 @@ const Main = () => {
 						<WeatherCard 
 						styles={styles} 
 						weatherInfo={weatherInfo}
-						cityName={cityName}
 						/>
 					}
 
