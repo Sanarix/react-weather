@@ -1,91 +1,135 @@
-import styles from './style.module.css';
-import { useState, useEffect } from 'react';
-import weatherConfig from '../../config/weatherApi.json';
-import cities from '../../cities/cities.json';
-import WeatherCard from './WeatherCard';
-import Overlay from '../Overlay/Overlay';
-import { weatherRequest } from '../../mocks/mock';
-
+import styles from "./style.module.css";
+import { useState } from "react";
+import weatherConfig from "../../config/weatherApi.json";
+import cities from "../../cities/cities.json";
+import CurrentWeatherCard from "../WeatherComponents/CurrentWeatherComponent/CurrentWeatherCard";
+import { Box } from "@mui/material";
+import Select from "react-select";
+import DailyWeatherComponent from "../WeatherComponents/DailyWeatherComponent/DailyWeatherComponent";
 const Main = () => {
-	const [weatherInfo, setWeatherInfo] = useState(weatherRequest);
-	const [searchQuery, setSearchQuery] = useState('');
-	const [seacrhSortedList, setSearchSortedList] = useState(null);
-	const [overlayShow, setOverlayShow] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [cityName, setCityName] = useState("");
+    const [currentWeatherInfo, setCurrentWeatherInfo] = useState("");
+    const [dailyWeatherInfo, setDailyWeatherInfo] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [seacrhSortedList, setSearchSortedList] = useState([]);
+    const [menuIsOpen, setMenuIsOpen] = useState(false); // добавляем это
 
-	function handler(e) {
-		const city = seacrhSortedList.filter((el) => 
-			el.name === e.target.textContent
-		)[0];
-		fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${city.coords.lat}&lon=${city.coords.lon}&appid=${weatherConfig['API-Key']}&lang=ru`)
-			.then(res => res.json())
-			.then(res => {
-				console.log(res);
-				setWeatherInfo(res);
-			})
-			.catch(err => {
-				throw new Error(err.message)
-			})
-			clear()
-	}
+    async function handler(e) {
+        setLoading(true);
+        const city = seacrhSortedList.filter((el) => el.name === e.value)[0];
+        if (city) {
+            try {
+                const [weatherRes, forecastRes] = await Promise.all([
+                fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${city.coords.lat}&lon=${city.coords.lon}&appid=${weatherConfig["API-Key"]}&units=metric&lang=ru`), 
+                fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.coords.lat}&lon=${city.coords.lon}&appid=${weatherConfig["API-Key"]}&units=metric&lang=ru`)
+            ])
+            const weatherData = await weatherRes.json();
+            const forecastData = await forecastRes.json();
 
-		function searchHandler(value) {
-			if(value.length) {
-				setSearchSortedList(cities.filter(el => el.name.toLowerCase().slice(0, value.length).includes(value.toLowerCase())));
-			}else {
-				setSearchSortedList(null)
-			}
-		}
+            setCityName(city.name);
+            setCurrentWeatherInfo(weatherData);
+            setDailyWeatherInfo(forecastData);
+            }catch(err) {
+                console.error('Ошибка', err);
+            }finally {
+                setLoading(false);
+            }
+        }
+        if (!e || !e.value) {
+            clear();
+        }
+    }
 
-		function clear() {
-			setSearchQuery('');
-			setSearchSortedList(null);
-			setOverlayShow(false);
-		}
+    function searchHandler(value) {
+        setSearchQuery(value);
+        if (value.length) {
+            const filtered = cities.filter((el) =>
+                el.name
+                    .toLowerCase()
+                    .slice(0, value.length)
+                    .includes(value.toLowerCase())
+            );
+            setSearchSortedList(filtered);
+            setMenuIsOpen(true); // открываем меню при вводе
+        } else {
+            setSearchSortedList([]);
+            setMenuIsOpen(false); // закрываем меню, если пустой ввод
+        }
+    }
 
-		useEffect(() => {
-			searchHandler(searchQuery)
-		}, [searchQuery])
+    function clear() {
+        setSearchQuery("");
+        setSearchSortedList([]);
+        setMenuIsOpen(false);
+        setDailyWeatherInfo([]);
+    }
 
-	return (
-		<>
-		{overlayShow && 
-			<Overlay style={styles.overlay} handler={clear}/>
-		}
-		<main className={styles.main}>
-			<div className={styles.searchWrapper}>
-				<input 
-					className={styles.searchInput} 
-					onClick={() => {setOverlayShow(true)}}
-					onChange={(e) => {setSearchQuery(e.target.value)}} 
-					value={searchQuery} 
-					placeholder='Поиск города'>
-				</input>
-					<ul id="cities-list"className={styles.citiesList}>
-						{seacrhSortedList && 
-						seacrhSortedList.map((el, i) => {
-							return (
-								<li key={i} onClick={handler}>
-									{el.name}
-								</li>
-							)
-						})
-						}
-						{
-							searchQuery &&
-							seacrhSortedList?.length === 0 &&
-							<li>Совпадений не найдено</li>
-						}
-					</ul>
-					</div>
-					{weatherInfo && 
-						<WeatherCard 
-						styles={styles} 
-						weatherInfo={weatherInfo}
-						/>
-					}
-
-		</main>
-		</>
-	)
-}
+    return (
+        <>
+            <main className={styles.main}>
+                <div className={styles.searchWrapper}>
+                    <Select
+                        options={
+                            seacrhSortedList?.map((el) => ({
+                                value: el.name,
+                                label: el.name,
+                            })) || []
+                        }
+                        onChange={handler}
+                        onInputChange={(value) => searchHandler(value)}
+                        value={
+                            searchQuery ? { value: searchQuery, label: searchQuery } : null
+                        }
+                        placeholder="Поиск города"
+                        isClearable
+                        menuIsOpen={menuIsOpen}
+                        noOptionsMessage={() => "Город не найден"}
+                        styles={{
+                            dropdownIndicator: (base) => ({
+                                ...base,
+                                display: "none", // скрываем стрелку
+                                zIndex: 200,
+                            }),
+                            control: (base) => ({
+                                ...base,
+                                width: "100%",
+                                height: "50px",
+                                zIndex: 200,
+                            }),
+                            container: (base) => ({ ...base, width: "100%" }),
+                        }}
+                    />
+                </div>
+                {currentWeatherInfo && (
+                    <Box
+                        display={"flex"}
+                        sx={{
+                            alignContent: "center",
+                            justifyContent: "space-around",
+                            width: "80%",
+                            marginTop: "5%",
+                            flexDirection: "column",
+                        }}
+                    >
+                        <Box
+                            display={"flex"}
+                            sx={{
+                                alignContent: "center",
+                                justifyContent: "space-around",
+                            }}
+                        >
+                            <CurrentWeatherCard
+                                styles={styles}
+                                cityName={cityName}
+                                weatherInfo={currentWeatherInfo}
+                            />
+                        </Box>
+                        <DailyWeatherComponent info={dailyWeatherInfo} />
+                    </Box>
+                )}
+            </main>
+        </>
+    );
+};
 export default Main;

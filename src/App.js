@@ -8,11 +8,11 @@ import firebaseConfig from './config/firebaseConfig.json'
 function App() {
   initializeApp(firebaseConfig);
   return (
-    <>
+    <div className='app-container'>
       <Header />
       <Main />
       <Footer />
-    </>
+    </div>
   );
 }
 
