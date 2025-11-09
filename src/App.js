@@ -5,11 +5,11 @@ import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
-    <>
+    <div className='app-container'>
       <Header />
       <Main />
       <Footer />
-    </>
+    </div>
   );
 }
 
