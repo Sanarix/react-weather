@@ -2,9 +2,11 @@ import { Box, Card, CardContent, Typography} from "@mui/material";
 import Divider from '@mui/material/Divider';
 import temperatureImg from '../../../../img/weather/temperature.svg';
 import styles from '../../../Main/style.module.css';
+import { useMediaQuery } from "@mui/material";
 
 const DailyWeatherCard = ({date, periods}) => {
 	const period = ['Утро', 'День', 'Вечер'];
+	const isMobile = useMediaQuery('(max-width: 740px)');
 
 	function getDayAndMonthString(dateString) {
 		const numOfDay = new Date(dateString).getDay();
@@ -36,7 +38,7 @@ const DailyWeatherCard = ({date, periods}) => {
 	}
 	
 	return (
-		<Card sx={{ minWidth: 350, width: 'auto' }}>
+		<Card sx={{ minWidth: (isMobile ? 300 : 350), width: 'auto' }}>
 			<CardContent>
 				<Typography variant="h6" align="center">{getDayAndMonthString(date)}</Typography>
 				{period.map((period) => {

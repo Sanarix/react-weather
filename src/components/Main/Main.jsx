@@ -119,6 +119,7 @@ const Main = () => {
                             sx={{
                                 alignContent: "center",
                                 justifyContent: "space-around",
+                                width: '100%',
                             }}
                         >
                             <CurrentWeatherCard
