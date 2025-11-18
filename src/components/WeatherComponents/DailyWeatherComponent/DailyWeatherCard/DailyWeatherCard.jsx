@@ -36,7 +36,7 @@ const DailyWeatherCard = ({date, periods}) => {
 	}
 	
 	return (
-		<Card sx={{ minWidth: 300, width: 'auto' }}>
+		<Card sx={{ minWidth: 350, width: 'auto' }}>
 			<CardContent>
 				<Typography variant="h6" align="center">{getDayAndMonthString(date)}</Typography>
 				{period.map((period) => {

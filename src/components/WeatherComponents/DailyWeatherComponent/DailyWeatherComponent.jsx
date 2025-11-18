@@ -76,6 +76,7 @@ const DailyWeatherComponent = ({info}) => {
 				alignContent: 'center',
 				justifyContent: 'space-around',
 				gap: '1em',
+				width: '100%',
 			} : {
 				display: 'flex',
 				overflow: 'auto',

@@ -1,5 +1,6 @@
 import styles from "./style.module.css";
 import { useState } from "react";
+import { useMediaQuery } from "@mui/material";
 import weatherConfig from "../../config/weatherApi.json";
 import cities from "../../cities/cities.json";
 import CurrentWeatherCard from "../WeatherComponents/CurrentWeatherComponent/CurrentWeatherCard";
@@ -13,7 +14,8 @@ const Main = () => {
     const [dailyWeatherInfo, setDailyWeatherInfo] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [seacrhSortedList, setSearchSortedList] = useState([]);
-    const [menuIsOpen, setMenuIsOpen] = useState(false); // добавляем это
+    const [menuIsOpen, setMenuIsOpen] = useState(false);
+    const isMobile = useMediaQuery('(max-width: 740px)');
 
     async function handler(e) {
         setLoading(true);
@@ -107,7 +109,7 @@ const Main = () => {
                         sx={{
                             alignContent: "center",
                             justifyContent: "space-around",
-                            width: "80%",
+                            width: (isMobile && "90%") || "80%",
                             marginTop: "5%",
                             flexDirection: "column",
                         }}
