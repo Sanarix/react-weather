@@ -5,8 +5,9 @@ import weatherConfig from "../../config/weatherApi.json";
 import cities from "../../cities/cities.json";
 import CurrentWeatherCard from "../WeatherComponents/CurrentWeatherComponent/CurrentWeatherCard";
 import { Box } from "@mui/material";
-import Select from "react-select";
+
 import DailyWeatherComponent from "../WeatherComponents/DailyWeatherComponent/DailyWeatherComponent";
+import SelectComponent from "./Select/Select";
 const Main = () => {
     const [loading, setLoading] = useState(false);
     const [cityName, setCityName] = useState("");
@@ -71,36 +72,12 @@ const Main = () => {
         <>
             <main className={styles.main}>
                 <div className={styles.searchWrapper}>
-                    <Select
-                        options={
-                            seacrhSortedList?.map((el) => ({
-                                value: el.name,
-                                label: el.name,
-                            })) || []
-                        }
-                        onChange={handler}
-                        onInputChange={(value) => searchHandler(value)}
-                        value={
-                            searchQuery ? { value: searchQuery, label: searchQuery } : null
-                        }
-                        placeholder="Поиск города"
-                        isClearable
-                        menuIsOpen={menuIsOpen}
-                        noOptionsMessage={() => "Город не найден"}
-                        styles={{
-                            dropdownIndicator: (base) => ({
-                                ...base,
-                                display: "none", // скрываем стрелку
-                                zIndex: 200,
-                            }),
-                            control: (base) => ({
-                                ...base,
-                                width: "100%",
-                                height: "50px",
-                                zIndex: 200,
-                            }),
-                            container: (base) => ({ ...base, width: "100%" }),
-                        }}
+                    <SelectComponent 
+                    seacrhSortedList={seacrhSortedList}
+                    handler={handler}
+                    searchQuery={searchQuery}
+                    menuIsOpen={menuIsOpen}
+                    searchHandler={searchHandler}
                     />
                 </div>
                 {currentWeatherInfo && (

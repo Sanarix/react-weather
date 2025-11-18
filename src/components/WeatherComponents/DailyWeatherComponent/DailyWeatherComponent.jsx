@@ -1,12 +1,13 @@
+import { Suspense, lazy } from "react";
 import { Box } from "@mui/material"
-import DailyWeatherCard from "./DailyWeatherCard/DailyWeatherCard";
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import {useMediaQuery} from "@mui/material";
 
 const DailyWeatherComponent = ({info}) => {
 	const isMobile = useMediaQuery('(max-width: 740px)');
 	const containerRef = useRef(null);
-	
+	const LazyDailyWeatherCard = lazy(() => import ("./DailyWeatherCard/DailyWeatherCard"));
+
 	function test(info) {
 		const times = {
 			'06': 'Утро',
@@ -65,7 +66,6 @@ const DailyWeatherComponent = ({info}) => {
 		}
   }, [isMobile]);
 
-
 	return (
 		<Box 
 			ref={containerRef}
@@ -93,10 +93,12 @@ const DailyWeatherComponent = ({info}) => {
 			}}
 			>
       {infoPerDays.map(([date, periods]) => (
-				<DailyWeatherCard key={date} date={date} periods={periods}/>
+				<Suspense key={date} fallback={<div>Загрузка ...</div>}>
+					<LazyDailyWeatherCard date={date} periods={periods}/>
+				</Suspense>
       ))}
     </Box>
 	)
 }
 
-export default DailyWeatherComponent
+export default memo(DailyWeatherComponent)

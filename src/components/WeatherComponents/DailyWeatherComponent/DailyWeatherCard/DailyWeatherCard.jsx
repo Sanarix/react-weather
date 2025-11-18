@@ -3,6 +3,7 @@ import Divider from '@mui/material/Divider';
 import temperatureImg from '../../../../img/weather/temperature.svg';
 import styles from '../../../Main/style.module.css';
 import { useMediaQuery } from "@mui/material";
+import { memo } from "react";
 
 const DailyWeatherCard = ({date, periods}) => {
 	const period = ['Утро', 'День', 'Вечер'];
@@ -101,4 +102,4 @@ const DailyWeatherCard = ({date, periods}) => {
 	);
 }
 
-export default DailyWeatherCard;
+export default memo(DailyWeatherCard);
