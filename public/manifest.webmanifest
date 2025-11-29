@@ -5,5 +5,7 @@
   "short_name": "Weather",
   "lang": "en",
   "description": "The weather app",
-  "categories": ["weather"]
+  "categories": ["weather"],
+  "orientation": "any",
+  "display": "standalone"
 }
