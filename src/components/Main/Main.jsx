@@ -1,5 +1,5 @@
 import styles from "./style.module.css";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useMediaQuery } from "@mui/material";
 import weatherConfig from "../../config/weatherApi.json";
 import cities from "../../cities/cities.json";
@@ -18,7 +18,7 @@ const Main = () => {
     const [menuIsOpen, setMenuIsOpen] = useState(false);
     const isMobile = useMediaQuery('(max-width: 740px)');
 
-    async function handler(e) {
+    const handler = useCallback(async (e) => {
         setLoading(true);
         const city = seacrhSortedList.filter((el) => el.name === e.value)[0];
         if (city) {
@@ -42,9 +42,9 @@ const Main = () => {
         if (!e || !e.value) {
             clear();
         }
-    }
+    }, [seacrhSortedList])
 
-    function searchHandler(value) {
+    const searchHandler = useCallback((value) => {
         setSearchQuery(value);
         if (value.length) {
             const filtered = cities.filter((el) =>
@@ -54,12 +54,12 @@ const Main = () => {
                     .includes(value.toLowerCase())
             );
             setSearchSortedList(filtered);
-            setMenuIsOpen(true); // открываем меню при вводе
+            setMenuIsOpen(true);
         } else {
             setSearchSortedList([]);
-            setMenuIsOpen(false); // закрываем меню, если пустой ввод
+            setMenuIsOpen(false);
         }
-    }
+    }, [])
 
     function clear() {
         setSearchQuery("");
