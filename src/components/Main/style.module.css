@@ -140,9 +140,6 @@
 }
 
 @media (max-width: 1024px) {
-	.currentWeatherCard {
-		width: 70%;
-	}
 
 	.currentWeatherCard__head {
 		flex-direction: column;
@@ -183,7 +180,7 @@
 	}
 
 	.currentWeatherCard {
-		width: 90%;
+		width: 100%;
 		padding: 2% 5%;
 		margin-top: 2em;
 		margin-bottom: 2em;

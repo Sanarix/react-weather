@@ -1,0 +1,11 @@
+{
+  "name": "Simple weather",
+  "theme_color": "rgb(88, 123, 167)",
+  "background_color": "#587ba7",
+  "short_name": "Weather",
+  "lang": "en",
+  "description": "The weather app",
+  "categories": ["weather"],
+  "orientation": "any",
+  "display": "standalone"
+}

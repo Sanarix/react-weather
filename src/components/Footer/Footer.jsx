@@ -9,7 +9,7 @@ const Footer = () => {
 	return (
 		<footer className={styles.footer}>
 			<div className={styles.owner}>
-				Disign and develop by <a href="https://korsakovla.web.app/">Leonid Korsakov</a>
+				Design and development by <a href="https://korsakovla.web.app/">Leonid Korsakov</a>
 			</div>
 			<div>
 				© All rights reserved 2023 - {getCurrentDate()}

@@ -6,6 +6,7 @@ import windDirImg from '../../../img/weather/windDir.svg';
 import waterProcentImg from '../../../img/weather/waterProcent.svg';
 import pressureImg from '../../../img/weather/pressure.svg';
 import cloudProcentImg from '../../../img/weather/cloudProcent.svg';
+import { memo } from 'react';
 
 const CurrentWeatherCard = ({weatherInfo, styles, cityName}) => {
 	const isMobile = useMediaQuery('(max-width: 740px)');
@@ -97,4 +98,4 @@ const CurrentWeatherCard = ({weatherInfo, styles, cityName}) => {
 	)
 }
 
-export default CurrentWeatherCard;
+export default memo(CurrentWeatherCard);

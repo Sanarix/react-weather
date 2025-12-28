@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Host: weather-is-simple.web.app
